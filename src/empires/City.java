@@ -11,7 +11,7 @@ public class City {
     
     private String name;
     private float money;
-    private int[] production, purchase;
+    private ArrayList<Integer> production, purchase;
     private int population, cap;
     private ArrayList<Material> granary = new ArrayList<>();
 
@@ -34,20 +34,6 @@ public class City {
      */
     public float getMoney() {
         return money;
-    }
-
-    /**
-     * @return the production
-     */
-    public int[] getProduction() {
-        return production;
-    }
-
-    /**
-     * @return the purchase
-     */
-    public int[] getPurchase() {
-        return purchase;
     }
 
     /**
@@ -86,20 +72,6 @@ public class City {
     }
 
     /**
-     * @param production the production to set
-     */
-    public void setProduction(int[] production) {
-        this.production = production;
-    }
-
-    /**
-     * @param purchase the purchase to set
-     */
-    public void setPurchase(int[] purchase) {
-        this.purchase = purchase;
-    }
-
-    /**
      * @param population the population to set
      */
     public void setPopulation(int population) {
@@ -125,6 +97,34 @@ public class City {
      */
     public void setGranary(ArrayList<Material> granary) {
         this.granary = granary;
+    }
+    
+    /**
+     * @return the production
+     */
+    public ArrayList<Integer> getProduction() {
+        return production;
+    }
+
+    /**
+     * @return the purchase
+     */
+    public ArrayList<Integer> getPurchase() {
+        return purchase;
+    }
+
+    /**
+     * @param production the production to set
+     */
+    public void setProduction(ArrayList<Integer> production) {
+        this.production = production;
+    }
+
+    /**
+     * @param purchase the purchase to set
+     */
+    public void setPurchase(ArrayList<Integer> purchase) {
+        this.purchase = purchase;
     }
     
     /**
