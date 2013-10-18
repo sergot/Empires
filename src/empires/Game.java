@@ -17,9 +17,16 @@ public class Game {
     }
     
     /**
-     * ends game
+     * stars the game
+     */
+    public void start() {
+        // TODO
+    }
+    
+    /**
+     * ends the game, clears everything
      */
     public void end() {
-        
+        // TODO
     }
 }

@@ -52,6 +52,4 @@ public class Cart {
     public void setMaterials(ArrayList<Material> materials) {
         this.materials = materials;
     }
-    
-    
 }

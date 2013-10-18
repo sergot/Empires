@@ -129,9 +129,11 @@ public class City {
     
     /**
      * checks if there is some cap left
+     * @return true if there is some cap left, false otherwise
      */
-    public void checkCap() {
+    public boolean checkCap() {
         // TODO
+        return true;
     }
     
     public void buy(Trader t) {
@@ -139,6 +141,10 @@ public class City {
     }
     
     public void sell(Trader t) {
+        // TODO
+    }
+    
+    public void produce(int type) {
         // TODO
     }
 }

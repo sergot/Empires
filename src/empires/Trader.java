@@ -67,5 +67,19 @@ public class Trader {
         this.cart = cart;
     }
     
+    /**
+     * adds item to the cart
+     * @param m a item to add
+     */
+    public void buy(Material m) {
+        // TODO
+    }
     
+    /**
+     * removes item from the cart
+     * @param m a item do remove
+     */
+    public void sell(Material m) {
+        // TODO
+    }
 }
