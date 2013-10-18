@@ -1,5 +1,7 @@
 package empires;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip Sergot
@@ -7,7 +9,7 @@ package empires;
 public class Cart {
     private int cap;
     private float speed;
-    private Material[] materials;
+    private ArrayList<Material> materials = new ArrayList<>();
 
     /**
      * @return the cap
@@ -21,13 +23,6 @@ public class Cart {
      */
     public float getSpeed() {
         return speed;
-    }
-
-    /**
-     * @return the materials
-     */
-    public Material[] getMaterials() {
-        return materials;
     }
 
     /**
@@ -45,9 +40,16 @@ public class Cart {
     }
 
     /**
+     * @return the materials
+     */
+    public ArrayList<Material> getMaterials() {
+        return materials;
+    }
+
+    /**
      * @param materials the materials to set
      */
-    public void setMaterials(Material[] materials) {
+    public void setMaterials(ArrayList<Material> materials) {
         this.materials = materials;
     }
     

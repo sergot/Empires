@@ -8,6 +8,7 @@ public class Barbarians extends Groups {
     private String name;
     private int size;
     private int weapon;
+    private City in;
 
     /**
      * @return the name
@@ -51,10 +52,39 @@ public class Barbarians extends Groups {
         this.weapon = weapon;
     }
 
-    @Override
-    public void move(Point p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * @return the in
+     */
+    public City getIn() {
+        return in;
+    }
+
+    /**
+     * @param in the in to set
+     */
+    public void setIn(City in) {
+        this.in = in;
     }
     
+    @Override
+    public void move(Point p) {
+        // TODO
+    }
     
+    /**
+     * 
+     * @return the city which is nearest to the group of barbarians
+     */
+    private Point nearestCity() {
+        // TODO
+        return new Point();
+    }
+    
+    /**
+     * 
+     * @param count how many people to kill
+     */
+    private void killPeople(int count) {
+        in.setPopulation(in.getPopulation() - count);
+    }
 }

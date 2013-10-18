@@ -2,7 +2,7 @@ package empires;
 
 /**
  *
- * @author user
+ * @author Filip Sergot
  */
 public class Legion {
     

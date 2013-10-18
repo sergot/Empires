@@ -1,5 +1,7 @@
 package empires;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip Sergot
@@ -9,11 +11,9 @@ public class City {
     
     private String name;
     private float money;
-    private int[] production;
-    private int[] purchase;
-    private int population;
-    private int cap;
-    private int capNow;
+    private int[] production, purchase;
+    private int population, cap;
+    private ArrayList<Material> granary = new ArrayList<>();
 
     /**
      * @return the position
@@ -62,13 +62,6 @@ public class City {
      */
     public int getCap() {
         return cap;
-    }
-
-    /**
-     * @return the capNow
-     */
-    public int getCapNow() {
-        return capNow;
     }
 
     /**
@@ -121,11 +114,31 @@ public class City {
     }
 
     /**
-     * @param capNow the capNow to set
+     * @return the granary
      */
-    public void setCapNow(int capNow) {
-        this.capNow = capNow;
+    public ArrayList<Material> getGranary() {
+        return granary;
+    }
+
+    /**
+     * @param granary the granary to set
+     */
+    public void setGranary(ArrayList<Material> granary) {
+        this.granary = granary;
     }
     
+    /**
+     * checks if there is some cap left
+     */
+    public void checkCap() {
+        // TODO
+    }
     
+    public void buy(Trader t) {
+        // TODO
+    }
+    
+    public void sell(Trader t) {
+        // TODO
+    }
 }
