@@ -4,19 +4,11 @@ package empires;
  *
  * @author Filip Sergot
  */
-public class Trader {
-    private Point position;
+public class Trader extends Being implements Movable {
     private String fname;
     
     private String lname;
     private Cart cart;
-
-    /**
-     * @return the position
-     */
-    public Point getPosition() {
-        return position;
-    }
 
     /**
      * @return the fname
@@ -37,13 +29,6 @@ public class Trader {
      */
     public Cart getCart() {
         return cart;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(Point position) {
-        this.position = position;
     }
 
     /**
@@ -81,5 +66,15 @@ public class Trader {
      */
     public void sell(Material m) {
         // TODO
+    }
+
+    @Override
+    public void move(Point p) {
+        
+    }
+    
+    @Override
+    public void draw() {
+        
     }
 }

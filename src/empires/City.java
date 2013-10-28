@@ -6,21 +6,12 @@ import java.util.ArrayList;
  *
  * @author Filip Sergot
  */
-public class City {
-    private Point position;
-    
+public class City extends Being {    
     private String name;
     private float money;
     private ArrayList<Integer> production, purchase;
     private int population, cap;
     private ArrayList<Material> granary = new ArrayList<>();
-
-    /**
-     * @return the position
-     */
-    public Point getPosition() {
-        return position;
-    }
 
     /**
      * @return the name
@@ -48,13 +39,6 @@ public class City {
      */
     public int getCap() {
         return cap;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(Point position) {
-        this.position = position;
     }
 
     /**
@@ -146,5 +130,10 @@ public class City {
     
     public void produce(int type) {
         // TODO
+    }
+    
+    @Override
+    public void draw() {
+        
     }
 }

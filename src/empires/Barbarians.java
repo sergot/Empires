@@ -4,7 +4,7 @@ package empires;
  *
  * @author Filip Sergot
  */
-public class Barbarians extends Groups {    
+public class Barbarians extends Being implements Movable {    
     private String name;
     private int size;
     private int weapon;
@@ -66,11 +66,6 @@ public class Barbarians extends Groups {
         this.in = in;
     }
     
-    @Override
-    public void move(Point p) {
-        // TODO
-    }
-    
     /**
      * 
      * @return the city which is nearest to the group of barbarians
@@ -86,5 +81,15 @@ public class Barbarians extends Groups {
      */
     private void killPeople(int count) {
         in.setPopulation(in.getPopulation() - count);
+    }
+
+    @Override
+    public void move(Point p) {
+        
+    }
+    
+    @Override
+    public void draw() {
+        
     }
 }

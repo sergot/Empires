@@ -4,7 +4,7 @@ package empires;
  *
  * @author Filip Sergot
  */
-public class Road {
+public class Road extends Thing {
     private City start;
     private City end;
     private boolean oneWay = false;
@@ -49,6 +49,11 @@ public class Road {
      */
     public void setOneWay(boolean oneWay) {
         this.oneWay = oneWay;
+    }
+
+    @Override
+    public void draw() {
+        
     }
     
     
