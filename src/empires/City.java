@@ -1,27 +1,29 @@
 package empires;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 /**
  *
  * @author Filip Sergot
  */
-public class City {
-    private Point position;
-    
+public class City extends Being {    
     private String name;
     private float money;
     private ArrayList<Integer> production, purchase;
-    private int population, cap;
     private ArrayList<Material> granary = new ArrayList<>();
+    private int population, cap;
 
-    /**
-     * @return the position
-     */
-    public Point getPosition() {
-        return position;
+    City() {
+       this.population = Empires.r.nextInt(100000);
     }
-
+    
+    City(Point p) {
+        super();
+        this.setPosition(p);
+    }
+    
     /**
      * @return the name
      */
@@ -48,13 +50,6 @@ public class City {
      */
     public int getCap() {
         return cap;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(Point position) {
-        this.position = position;
     }
 
     /**
@@ -146,5 +141,14 @@ public class City {
     
     public void produce(int type) {
         // TODO
+    }
+    
+    @Override
+    public void draw(Graphics2D g) {
+        if(population <= 0)
+            g.setColor(Color.black);
+        g.fillOval((int)this.getPosition().getX() - 12, (int)this.getPosition().getY() - 12, 25, 25);
+        
+        g.setColor(Color.yellow);
     }
 }
