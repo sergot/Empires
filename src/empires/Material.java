@@ -1,16 +1,62 @@
 package empires;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author Filip Sergot
  */
 
 public class Material {
+    public enum types {
+        food,
+        wood,
+        corn,
+        copper,
+        weapon,
+        armor,
+        brick;
+        
+        private static final List<types> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
+
+        public static types randomType()  {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
+    }
+    
     private int ID;
-    private int type;
+    private types type;
     private float volume;
     private float weight;
-
+    private int expiry = -1;
+    
+    /**
+     *
+     * @param t type of material
+     */
+    public Material(types t) {
+        type = t;
+        
+        if(t == types.corn)
+            expiry = 50000;
+        else if(t == types.food)
+            expiry = 20000;
+        else
+            expiry = 100000;
+        
+        ID = Empires.id++;
+    }
+    
+    @Override
+    public String toString() {
+        return "" + type;
+    }
+    
     /**
      * @return the ID
      */
@@ -21,7 +67,7 @@ public class Material {
     /**
      * @return the type
      */
-    public int getType() {
+    public types getType() {
         return type;
     }
 
@@ -49,7 +95,7 @@ public class Material {
     /**
      * @param type the type to set
      */
-    public void setType(int type) {
+    public void setType(types type) {
         this.type = type;
     }
 
@@ -67,11 +113,19 @@ public class Material {
         this.weight = weight;
     }
     
-    public enum TYPES {
-        food,
-        build
+    /**
+     * checks if materials is expired
+     * @return true if it's not expired; false otherwise
+     */
+    public boolean checkExpiry() {
+        return expiry-- > 0;
     }
     
-    
-    
+    /**
+     * check if this material is a food
+     * @return true if it's food; false otherwise
+     */
+    public boolean ifFood() {
+        return type == types.food || type == types.corn;
+    }
 }

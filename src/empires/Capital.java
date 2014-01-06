@@ -10,14 +10,12 @@ import java.awt.Graphics2D;
 public class Capital extends City {
     Capital() {
         super();
+        
+        setCap(getCap() * 2);
     }
     
     Capital(Point p) {
         super(p);
-    }
-    
-    public Legion sendLegion() {
-        return new Legion();
     }
     
     @Override

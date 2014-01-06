@@ -13,12 +13,14 @@ public class Road extends Thing {
     private City end;
     private Path2D path;
     private boolean oneWay = false;
+    private int offset = 0;
     
-    Road(City start, City end) {
+    Road(City start, City end, int offset) {
         this.start = start;
         this.end = end;
+        this.offset = offset;
         
-        path = this.newPath();
+        path = this.newPath(offset);
     }
     
     @Override
@@ -27,13 +29,18 @@ public class Road extends Thing {
         return this.equals(r);
     }
     
-    private Path2D newPath() {
+    /**
+     * creates new Path2D for given road
+     * @param offset offset
+     * @return new Path2D
+     */
+    private Path2D newPath(int offset) {
         Path2D newPath;
         
-        double startX = start.getPosition().getX(),
-               startY = start.getPosition().getY(),
-               endX   =   end.getPosition().getX(),
-               endY   =   end.getPosition().getY();
+        double startX = start.getPosition().getX() + offset,
+               startY = start.getPosition().getY() + offset,
+               endX   =   end.getPosition().getX() + offset,
+               endY   =   end.getPosition().getY() + offset;
         
         newPath = new Path2D.Double();
         
@@ -46,8 +53,17 @@ public class Road extends Thing {
         return newPath;
     }
     
+    /**
+     * counts center of this road
+     * @return 
+     */
     public Point countCenter() {
         return new Point((start.getPosition().getX() + end.getPosition().getX()) / 2, (start.getPosition().getY() + end.getPosition().getY()) / 2);
+    }
+    
+    @Override
+    public String toString() {
+        return "from: " + start + " to: " + end;
     }
     
     /**
@@ -96,20 +112,6 @@ public class Road extends Thing {
     public void draw(Graphics2D g) {
         g.setColor(Color.black);
         
-        /*Point p = start.getPosition();
-        double angle;
-        while(!p.equals(end.getPosition())) {
-            angle = p.getAngle(end.getPosition());
-            g.drawLine(p.getX(), p.getY(), p.getX(), p.getY());
-            
-            p.setX((int) (p.getX() + Math.round(Math.cos(angle))));
-            p.setY((int) (p.getY() - Math.round(Math.sin(-angle))));
-            
-            System.out.println(p.getX() + "," + p.getY());
-        }
-        System.out.println("END");
-        */
-        //g.drawLine(start.getPosition().getX(), start.getPosition().getY(), end.getPosition().getX(), end.getPosition().getY());
         g.draw(getPath());
         g.setColor(Color.yellow);
     }

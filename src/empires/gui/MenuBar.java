@@ -1,5 +1,8 @@
 package empires.gui;
 
+import empires.Empires;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -17,12 +20,15 @@ public class MenuBar extends JMenuBar {
     public MenuBar() {
         firstMenu = new JMenu("File");
         
-        firstMenuFirstItem = new JMenuItem("New Game");
-        firstMenu.add(firstMenuFirstItem);
-        
-        firstMenu.add(new JSeparator());
-        
         exitItem = new JMenuItem("Exit");
+        exitItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Empires.getMainWindow().dispose();
+                System.exit(0);
+            }
+        });
         firstMenu.add(exitItem);
         
         this.add(firstMenu);

@@ -3,7 +3,6 @@ package empires;
 import empires.gui.BeingGUI;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 
 /**
@@ -24,23 +23,39 @@ public class Barbarians extends Being implements Runnable, Movable {
     private double angle;
 
     public Barbarians() {
-        being = new BeingGUI(BeingGUI.type.BARBARIANS);
+        String[] names = new String[10];
+        names[0] = "Heat";
+        names[1] = "Pelicans";
+        names[2] = "Thunder";
+        names[3] = "Knicks";
+        names[4] = "Spurs";
+        names[5] = "Rockets";
+        names[6] = "Lakers";
+        names[7] = "Suns";
+        names[8] = "Cavaliers";
+        names[9] = "Warriors";
         
-        this.toVisit = (ArrayList<City>) Empires.game.getCities().clone(); // copy list of cities (a city will be removed if visited)
+        name = names[Empires.getR().nextInt(names.length)];
         
-        currentRoad = Empires.game.getRoads().get(Empires.r.nextInt(Empires.game.getRoads().size())); // random road
+        being = new BeingGUI(BeingGUI.type.BARBARIANS, this);
+        this.setRadius(being.getRadius());
         
-        this.setPosition(currentRoad.countCenter()); // center of random road
-        dest = currentRoad.getEnd();
+        this.toVisit = (ArrayList<City>) Empires.getGame().getCities().clone(); // copy list of cities (a city will be removed if visited)
+        
+        this.setPosition(new Point(450, 200));
+        dest = Empires.getGame().getCities().get(Empires.getR().nextInt(Empires.getGame().getCities().size()));
+        currentRoad = Empires.getGame().specificRoad(dest);
         
         // set current position to drawing
         being.setFrame(this.getPosition().getX() - being.getRadius() / 2, this.getPosition().getY() - being.getRadius() / 2, being.getRadius(), being.getRadius());
         being.setPath(currentRoad.getPath());
+        
+        size = Empires.getR().nextInt(100);
+        weapon = Empires.getR().nextInt(100);
     }
     
     /**
-     * 
-     * @return the city which is nearest to the group of barbarians
+     * finds the nearest city and sets the path to that city
      */
     private void nearestCity() {
         City destination = null;
@@ -64,10 +79,11 @@ public class Barbarians extends Being implements Runnable, Movable {
         
         if(in != null) {
             Road newDestRoad;
-            if((newDestRoad = Empires.game.specificRoad(in, dest)) != null)
-                being.setPath(newDestRoad.getPath());
-            else
-                being.setPath(null);
+            if((newDestRoad = Empires.getGame().specificRoad(in, getDest())) != null) {
+                currentRoad = newDestRoad;
+                getBeing().setPath(newDestRoad.getPath());
+            } else
+                getBeing().setPath(null);
         }
     }
     
@@ -81,86 +97,49 @@ public class Barbarians extends Being implements Runnable, Movable {
 
     @Override
     public void move() {
-        double[] point = new double[2];
-        
-        PathIterator pi = being.getPath().getPathIterator(null);
-        
-        while(!pi.isDone()) {
-            int type = pi.currentSegment(point);
-            
-            if(type == PathIterator.SEG_MOVETO) {
-                being.setFrame(point[0] - being.getRadius() / 2, point[1] - being.getRadius() / 2, being.getRadius(), being.getRadius());
-            } else if(type == PathIterator.SEG_LINETO) {
-                double ox = being.getCenterX();
-                double oy = being.getCenterY();
-                double nx = point[0];
-                double ny = point[1];
-                
-                double distance = Math.sqrt((ox-nx)*(ox-nx) + (oy-ny)*(oy-ny));
-                
-                int count = (int)((distance / being.getSpeed()) / being.getDelay());
-                
-                double deltaX = (nx - ox) / count;
-                double deltaY = (ny - oy) / count;
-                
-                for (int i = 0; i < count; i++) {
-                    ox += deltaX;
-                    oy += deltaY;
-                    being.setFrame(ox - being.getRadius() / 2, oy - being.getRadius() / 2,
-                                       being.getRadius(), being.getRadius());
-                    
-                    try { Thread.sleep(being.getDelay()); }
-                    catch (InterruptedException e) { }
-                }
-            }
-            pi.next();
-        }
+        being.move();
     }
-
-/*    @Override
-    public void move() {
-        Point now = this.getPosition();
-        if(dest != null)
-            if(now.equals(this.dest.getPosition())) {
-                in = dest;
-                this.killPeople(Empires.r.nextInt(100));
-                if(in.getPopulation() <= 0)
-                    this.nearestCity();
-            } else {
-                angle = this.getPosition().getAngle(this.dest.getPosition());
-
-                now.setX((int) Math.round(now.getX() + Math.round(0.75 * Math.cos(angle))));
-                now.setY((int) Math.round(now.getY() - Math.round(0.75 * Math.sin(-angle))));
-            }
-    }
-*/    
+    
     @Override
     public void run() {
-        while(true) {
-            if(being.getPath() != null && in == null) {
-                this.move();
-                in = dest;
-            }
+        while(!dead()) {
             
-            if(in != null)
-                this.killPeople(Empires.r.nextInt(100));
+            if(in == null)
+                move();
             
-            if(toVisit.isEmpty()) break;
-            
-            if(in != null && in.getPopulation() <= 0) {
-                this.nearestCity(); // get new destination
+            if(currentRoad.getEnd().equals(Empires.getGame().getCenter())) {
                 in = null;
+                currentRoad = Empires.getGame().specificRoad(dest);
+                being.setPath(currentRoad.getPath());
+            } else {
+                in = dest;
+                
+                if(in.getPopulation() <= 0) {
+                    nearestCity();
+                    if(currentRoad == null) break;
+                    in = null;
+                } else {
+                    in.getGranary().clear();
+                    in.setMoney(0);
+                    killPeople(Empires.getR().nextInt(100));
+                }
             }
             
             try { Thread.sleep(10);
             } catch (InterruptedException e) { }
         }
+        Empires.getGame().getBarbarians().remove(this);
+    }
+    
+    @Override
+    public String toString() {
+        return "destination: " + dest.toString() + " in: " + in.toString();
     }
     
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(being.getColor());
-        g.draw(being);
+        g.setColor(getBeing().getColor());
+        g.draw(getBeing());
         g.setColor(Color.yellow);
     }
     
@@ -172,38 +151,10 @@ public class Barbarians extends Being implements Runnable, Movable {
     }
 
     /**
-     * @return the size
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * @return the weapon
-     */
-    public int getWeapon() {
-        return weapon;
-    }
-
-    /**
      * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @param size the size to set
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    /**
-     * @param weapon the weapon to set
-     */
-    public void setWeapon(int weapon) {
-        this.weapon = weapon;
     }
 
     /**
@@ -218,5 +169,19 @@ public class Barbarians extends Being implements Runnable, Movable {
      */
     public void setIn(City in) {
         this.in = in;
+    }
+
+    /**
+     * @return the being
+     */
+    public BeingGUI getBeing() {
+        return being;
+    }
+
+    /**
+     * @return the dest
+     */
+    public City getDest() {
+        return dest;
     }
 }

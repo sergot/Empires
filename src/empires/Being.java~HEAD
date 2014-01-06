@@ -1,13 +1,13 @@
 package empires;
 
+import java.awt.Graphics2D;
+
 /**
  *
  * @author Filip Sergot
  */
-public abstract class Groups {
+public class Being extends Thing {
     private Point position;
-    
-    public abstract void move(Point p);
 
     /**
      * @return the position
@@ -22,6 +22,10 @@ public abstract class Groups {
     public void setPosition(Point position) {
         this.position = position;
     }
-    
+
+    @Override
+    public void draw(Graphics2D g) {
+        
+    }
     
 }

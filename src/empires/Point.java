@@ -19,17 +19,23 @@ public class Point {
         return p.getX() == this.x && p.getY() == this.y;
     }
     
-    Point(double x, double y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
     
+    /**
+     * counts the distance from this point to given point
+     * @param p point
+     * @return distance from point to point
+     */
     public int distance(Point p) {
         return (int) Math.sqrt(Math.pow((p.getX() - this.x), 2) + Math.pow((p.getY() - this.y), 2));
     }
     
-    public double getAngle(Point p) {
-        return Math.atan2(p.y - y, p.x - x);
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
 
     /**
